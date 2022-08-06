@@ -5,15 +5,14 @@ from datetime import date
 import datetime
 from handleInput import *
 
-action = 'add'
+if (len(sys.argv) > 1):
+    action = sys.argv[1]
+else:
+    action = 'test'
+
 todays_date = date.today()
 
-if (action == 'test'):
-    print('testing...')
-    my_string = '2019-10-31'
-    newDate = FindEarliestRegDate(my_string)
-    print(newDate)
-elif (action == 'add'):
+if (action == 'add'):
     #get user input for class date and validate
     print('Desired class date in form of: MM-DD')
     ClassDate = input()
@@ -27,12 +26,33 @@ elif (action == 'add'):
     print('Enter bike number:')
     BikeNumber = int(input())
     validateBike(BikeNumber)
-    
-    print(EarliestDate,ClassDate,ClassTime,BikeNumber)
-    
+    payload = {
+        "RegDate": EarliestDate,
+        "ClassDate": ClassDate,
+        "ClassTime": ClassTime,
+        "BikeNumber": BikeNumber
+    }
+    addToSchedule(payload)
+
+    print(EarliestDate, ClassDate, ClassTime, BikeNumber)
+
+elif (action == 'test'):
+    upcomingClasses = retrieveClasses()
 
 elif (action == 'useBot'):
-    print('logging in...')
+    print('getting credentials...')
     credentials = secrets.get_credentials()
+    print('Getting Schedule:')
+    upcomingClasses = retrieveClasses()
+    print(upcomingClasses)
+    print('creating bot...')
     bot = cb.cycleBot(credentials['email'], credentials['password'])
+    '''Handle the bot functions
+      login in for classes
+      then try to register for classes'''
+    print('logging in...')
     bot.login()
+    #for c in upcoming classes
+    exit(0)
+else:
+    print('please enter a valid argument')

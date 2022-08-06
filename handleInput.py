@@ -1,5 +1,7 @@
 from datetime import *
-
+import csv
+import pandas as pd
+from os.path import exists
 
 def validateDate(date_text):
   try:
@@ -26,3 +28,57 @@ def FindEarliestRegDate(ClassDate):
   eight_days_ago = my_date - timedelta(8)
   NewString = eight_days_ago.strftime("%Y-%m-%d")
   return NewString
+
+
+def addToSchedule(payload):
+  '''
+  takes in payload of structure
+  payload = {
+      "RegDate": EarliestDate,
+      "ClassDate":ClassDate,
+      "ClassTime":ClassTime,
+      "BikeNumber": BikeNumber
+    }
+  '''
+  headers = ['RegDate','ClassDate','ClassTime','BikeNumber']
+  if(exists('./schedule.csv')):
+    with open('schedule.csv', 'a') as file:
+      dict_object = csv.DictWriter(file, headers)
+      dict_object.writerow(payload)
+  else:
+    with open('schedule.csv', 'w+') as file:
+      dict_object = csv.DictWriter(file, headers)
+      dict_object.writeheader()
+      dict_object.writerow(payload)
+
+
+def retrieveClasses():
+  '''Get the database of all dates
+    remove all previous dates
+    get all dates that 
+  '''
+  data = pd.read_csv('schedule.csv')
+  NoOldDates = RemoveOldDates(data)
+  #TryRegisterFor = CanRegisterCurrently(RemoveOldDates)
+  return data
+
+def RemoveOldDates(data):
+  '''
+    takes in a dataframe
+    compares the class-date to the current date
+    if the date has passed, remove from the datafframe and the schedule.csv
+  '''
+  today = pd.to_datetime('today').floor('D')
+  data['ClassDate'] = pd.to_datetime(data['ClassDate'])
+  filtered_data = data[data["ClassDate"]>= today]
+  return filtered_data
+
+def CanRegisterCurrently(data):
+  '''Takes in a pandas datraframe,
+    returns classes the bot should try and register for
+    df has col's 
+    RegDate ClassDate ClassTime BikeNumber
+  '''
+  for row in data:
+    print(row)
+  return

@@ -5,7 +5,7 @@ def get_credentials() -> dict:
             try:
                 key, value = line.split(": ")
             except ValueError:
-                print("Add email and password to userdata.txt")
+                print("Credentials invalid! \n Add email and password to userdata.txt")
                 exit(0)
             credentials[key] = value.rstrip(" \n")
     return credentials
