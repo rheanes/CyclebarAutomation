@@ -34,15 +34,18 @@ if (action == 'add'):
     }
     addToSchedule(payload)
 
-    print(EarliestDate, ClassDate, ClassTime, BikeNumber)
+    print('Entered data: \n',
+          'Date to initialize registration:',EarliestDate,
+          '\n Date of class:',ClassDate,
+          '\n Class Time:',ClassTime,
+          '\n Bike number:',BikeNumber)
 
 elif (action == 'test'):
     upcomingClasses = retrieveClasses()
+    print(upcomingClasses)
 
 elif (action == 'useBot'):
-    print('getting credentials...')
     credentials = secrets.get_credentials()
-    print('Getting Schedule:')
     upcomingClasses = retrieveClasses()
     print(upcomingClasses)
     print('creating bot...')

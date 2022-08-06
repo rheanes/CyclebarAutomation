@@ -44,6 +44,10 @@ class cycleBot:
     if (self.getCurrentUrl() ==
               'https://members.cyclebar.com/covid-waiver/cyclebar-dunwoody'):
           acceptCovidPolicy(bot)
+    elif(self.getCurrentUrl() == 'https://members.cyclebar.com/'):
+      print('Login Scuessful')
+      
+    
 
   def getCurrentUrl(self):
     print(self.bot.current_url)

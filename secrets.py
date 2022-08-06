@@ -1,4 +1,5 @@
 def get_credentials() -> dict:
+    print('getting credentials...')
     credentials = dict()
     with open('userdata.txt') as f:
         for line in f.readlines():
