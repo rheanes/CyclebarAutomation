@@ -5,7 +5,7 @@ from datetime import date
 import datetime
 from handleInput import *
 
-action = 'test'
+action = 'add'
 todays_date = date.today()
 
 if (action == 'test'):
@@ -19,7 +19,7 @@ elif (action == 'add'):
     ClassDate = input()
     validateDate(ClassDate)
     ClassDate = str(todays_date.year) + '-' + ClassDate
-    EarliestDate = FindEarliestReg(ClassDate)
+    EarliestDate = FindEarliestRegDate(ClassDate)
     #get user input for user time and validdate
     print('Enter class time in form of: H:MM')
     ClassTime = input()

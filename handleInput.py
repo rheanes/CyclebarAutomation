@@ -1,17 +1,15 @@
-from datetime import datetime, timedelta
-
-
+from datetime import *
 
 
 def validateDate(date_text):
   try:
-    datetime.datetime.strptime(date_text, '%m-%d')
+    datetime.strptime(date_text, '%m-%d')
   except ValueError:
     raise ValueError("Incorrect data format, should be MM-DD")
 
 def validateTime(time_text):
   try:
-    datetime.datetime.strptime(time_text, '%H:%M')
+    datetime.strptime(time_text, '%H:%M')
   except ValueError:
     raise ValueError("Incorrect data format, should be MM-DD")
 
