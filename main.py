@@ -5,7 +5,6 @@ from selenium.webdriver.common.by import By
 import time
 from datetime import datetime as dt
 
-
 def get_driver():
     options = webdriver.ChromeOptions()
     options.add_argument("disable-infobars")
@@ -15,19 +14,21 @@ def get_driver():
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_argument("disable-blink-features=AutomationControlled")
     driver = webdriver.Chrome(options=options)
-    driver.get("https://members.cyclebar.com/auth/login?location_id=cyclebar-dunwoody")
-    
+    driver.get(
+        "https://members.cyclebar.com/auth/login?location_id=cyclebar-dunwoody"
+    )
+
     return driver
 
 
-def login(driver):
+def login(driver, userEmail, userPassword):
     time.sleep(2)
     email = driver.find_element(by="id", value="form-input-email")
     time.sleep(3)
     password = driver.find_element(by="id", value="form-input-password")
-    email.send_keys("rhilleanes@gmail.com")
+    email.send_keys(userEmail)
     time.sleep(2)
-    password.send_keys("seleniumAutomation1")
+    password.send_keys(userPassword)
     password.send_keys(Keys.RETURN)
 
 
@@ -40,17 +41,16 @@ def acceptCovidPolicy(driver):
 
 def main():
     driver = get_driver()
-    login(driver)
+    email = os.environ['uname']
+    password = os.environ['pword']
+  
+    login(driver, email, password)
     if (driver.current_url ==
             'https://members.cyclebar.com/covid-waiver/cyclebar-dunwoody'):
-        time.sleep(3)
         acceptCovidPolicy(driver)
 
     time.sleep(6)
-    driver.find_element(
-        by='xpath',
-        value='/html/body/div[2]/div[2]/div[2]/div[4]/div/div[1]/small/a'
-    ).click()
+    driver.get('https://members.cyclebar.com/book/cyclebar-dunwoody')
     time.sleep(20)
 
 
