@@ -1,4 +1,6 @@
-import datetime
+from datetime import datetime, timedelta
+
+
 
 
 def validateDate(date_text):
@@ -19,3 +21,10 @@ def validateBike(bikenum):
   if bikenum>50:
     raise Exception("Sorry, bike number must not excede 50")
 
+
+def FindEarliestRegDate(ClassDate):
+  """Remove 8 days from this date to get the earliest registration date"""
+  my_date = datetime.strptime(ClassDate, "%Y-%m-%d")
+  eight_days_ago = my_date - timedelta(8)
+  NewString = eight_days_ago.strftime("%Y-%m-%d")
+  return NewString
