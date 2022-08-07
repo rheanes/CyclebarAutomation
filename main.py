@@ -3,7 +3,7 @@ import secrets, sys
 import time
 from datetime import date
 import datetime
-from handleInput import *
+from handleInput import retrieveClasses, addToSchedule, FindEarliestRegDate, validateBike, validateTime, validateDate
 
 if (len(sys.argv) > 1):
     action = sys.argv[1]
@@ -42,7 +42,16 @@ if (action == 'add'):
 
 elif (action == 'test'):
     upcomingClasses = retrieveClasses()
-    print(upcomingClasses)
+    for index in upcomingClasses.index:
+      RegistrationDate = upcomingClasses['RegDate'][index]
+      print(RegistrationDate, 'type:', type(RegistrationDate))
+      ClassDate = upcomingClasses['ClassDate'][index]
+      print(ClassDate, 'type:', type(ClassDate))
+      ClassTime = upcomingClasses['ClassTime'][index]
+      print(ClassTime, 'type:', type(ClassTime))
+      BikeNum = upcomingClasses['BikeNumber'][index]
+      print(BikeNum, 'type:', type(BikeNum))
+    
 
 elif (action == 'useBot'):
     credentials = secrets.get_credentials()
@@ -55,7 +64,8 @@ elif (action == 'useBot'):
       then try to register for classes'''
     print('logging in...')
     bot.login()
-    #for c in upcoming classes
+    upcomingClasses = retrieveClasses()
+
     exit(0)
 else:
     print('please enter a valid argument')

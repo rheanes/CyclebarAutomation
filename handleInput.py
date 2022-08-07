@@ -64,9 +64,13 @@ def retrieveClasses():
     data = pd.read_csv('schedule.csv')
     data['ClassDate'] = pd.to_datetime(data['ClassDate'])
     data['RegDate'] = pd.to_datetime(data['RegDate'])
-    NoOldDates = RemoveOldDates(data)
-    attemptRegister = CanRegisterCurrently(NoOldDates)
-    return attemptRegister
+    sortedData = data.sort_values(by='RegDate', ascending=True)
+    ##print(sortedData)
+    NoOldDates = RemoveOldDates(sortedData)
+    attemptToRegister = CanRegisterCurrently(NoOldDates)
+    #print(attemptToRegister)
+  
+    return attemptToRegister
 
 
 def RemoveOldDates(data):
@@ -77,6 +81,7 @@ def RemoveOldDates(data):
   '''
     print('Removing old classes...')
     today = pd.to_datetime('today').floor('D')
+    #print(today)
     filtered_data = data[data["ClassDate"] >= today]
     return filtered_data
 
@@ -91,3 +96,4 @@ def CanRegisterCurrently(data):
     today = pd.to_datetime('today').floor('D')
     filtered_data = data[data["RegDate"] <= today]
     return filtered_data
+

@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-
 import time,os
 
 def get_driver():
@@ -22,9 +21,6 @@ class cycleBot:
     self.email = email
     self.password = password
     self.bot = get_driver()
-
-
-
 
 
   def login(self):
@@ -47,8 +43,6 @@ class cycleBot:
     elif(self.getCurrentUrl() == 'https://members.cyclebar.com/'):
       print('Login Scuessful')
       
-    
-
   def getCurrentUrl(self):
     print(self.bot.current_url)
     return self.bot.current_url
