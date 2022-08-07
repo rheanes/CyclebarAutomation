@@ -46,6 +46,14 @@ class cycleBot:
   def getCurrentUrl(self):
     print(self.bot.current_url)
     return self.bot.current_url
+
+
+  def attemptReserve(self, Url, ClassTime):
+    time.sleep(3)
+    print('url from inside attemptReserve', Url)
+    bot = self.bot
+    bot.get(Url)
+    return
   
   
 

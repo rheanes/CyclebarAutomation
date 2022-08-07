@@ -8,7 +8,7 @@ from handleInput import retrieveClasses, addToSchedule, FindEarliestRegDate, val
 if (len(sys.argv) > 1):
     action = sys.argv[1]
 else:
-    action = 'test'
+    action = 'useBot'
 
 todays_date = date.today()
 
@@ -43,20 +43,16 @@ if (action == 'add'):
 elif (action == 'test'):
     upcomingClasses = retrieveClasses()
     for index in upcomingClasses.index:
-      RegistrationDate = upcomingClasses['RegDate'][index]
-      print(RegistrationDate, 'type:', type(RegistrationDate))
       ClassDate = upcomingClasses['ClassDate'][index]
-      print(ClassDate, 'type:', type(ClassDate))
+      classDateString = ClassDate.strftime('%Y-%m-%d')
       ClassTime = upcomingClasses['ClassTime'][index]
-      print(ClassTime, 'type:', type(ClassTime))
-      BikeNum = upcomingClasses['BikeNumber'][index]
-      print(BikeNum, 'type:', type(BikeNum))
+      url = f"https://members.cyclebar.com/book/cyclebar-dunwoody?date={classDateString}"
+      print(url)
     
 
 elif (action == 'useBot'):
     credentials = secrets.get_credentials()
     upcomingClasses = retrieveClasses()
-    print(upcomingClasses)
     print('creating bot...')
     bot = cb.cycleBot(credentials['email'], credentials['password'])
     '''Handle the bot functions
@@ -65,6 +61,16 @@ elif (action == 'useBot'):
     print('logging in...')
     bot.login()
     upcomingClasses = retrieveClasses()
+    for index in upcomingClasses.index:
+      ClassDate = upcomingClasses['ClassDate'][index]
+      classDateString = ClassDate.strftime('%Y-%m-%d')
+      ClassTime = upcomingClasses['ClassTime'][index]
+      url = f"https://members.cyclebar.com/book/cyclebar-dunwoody?date={classDateString}"
+      bot.attemptReserve(url, ClassTime)
+      
+      BikeNum = upcomingClasses['BikeNumber'][index]
+      RegistrationDate = upcomingClasses['RegDate'][index]
+    
 
     exit(0)
 else:
