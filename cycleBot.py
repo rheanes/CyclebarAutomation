@@ -55,11 +55,11 @@ class cycleBot:
     print('url from inside attemptReserve', Url)
     bot = self.bot
     bot.get(Url)
-    # 
-    availableClasses = bot.find_elements(By.XPATH, "//*[@id='root']/div[2]/div[4]/div[3]/table/tbody")
+    # //*[@id="root"]/div[2]/div[4]/div[3]/table/tbody/tr[1]/td[2]
+    availableClasses = bot.find_elements(By.XPATH, "//*[@id='root']/div[2]/div[4]/div[3]/table/tbody/tr/td[2]")
     for e in availableClasses:
       time.sleep(4)
-      print("class rows....",e.text)
+      print("class time....",e.text)
       
     return
   
