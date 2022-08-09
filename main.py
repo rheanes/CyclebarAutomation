@@ -66,7 +66,7 @@ elif (action == 'useBot'):
       classDateString = ClassDate.strftime('%Y-%m-%d')
       ClassTime = upcomingClasses['ClassTime'][index]
       url = f"https://members.cyclebar.com/book/cyclebar-dunwoody?date={classDateString}"
-      bot.attemptReserve(url, ClassTime)
+      bot.ReserveUrl(url, ClassTime)
       
       BikeNum = upcomingClasses['BikeNumber'][index]
       RegistrationDate = upcomingClasses['RegDate'][index]

@@ -42,17 +42,25 @@ class cycleBot:
           acceptCovidPolicy(bot)
     elif(self.getCurrentUrl() == 'https://members.cyclebar.com/'):
       print('Login Scuessful')
+    else:
+      print('Login Failed')
       
   def getCurrentUrl(self):
     print(self.bot.current_url)
     return self.bot.current_url
 
 
-  def attemptReserve(self, Url, ClassTime):
+  def ReserveUrl(self, Url, ClassTime):
     time.sleep(3)
     print('url from inside attemptReserve', Url)
     bot = self.bot
     bot.get(Url)
+    # 
+    availableClasses = bot.find_elements(By.XPATH, "//*[@id='root']/div[2]/div[4]/div[3]/table/tbody")
+    for e in availableClasses:
+      time.sleep(4)
+      print("class rows....",e.text)
+      
     return
   
   
