@@ -63,10 +63,11 @@ class cycleBot:
       tds = r.find_elements(By.TAG_NAME, "td")
       if(len(tds)> 2):
         startTime = tds[1]
+        button = r.find_element(By.TAG_NAME, "button")
       else:
         continue
 
-      print(startTime.text)
+      print("ClassTime:",startTime.text,"ButtonTxt:", button.text)
 
       
     return
