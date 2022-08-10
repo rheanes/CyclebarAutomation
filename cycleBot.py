@@ -51,15 +51,25 @@ class cycleBot:
 
 
   def ReserveUrl(self, Url, ClassTime):
+    print("Target Class time:", ClassTime)
+    print("Target Class time type:", type(ClassTime))
     time.sleep(3)
     print('url from inside attemptReserve', Url)
     bot = self.bot
     bot.get(Url)
-    # //*[@id="root"]/div[2]/div[4]/div[3]/table/tbody/tr[1]/td[2]
-    availableClasses = bot.find_elements(By.XPATH, "//*[@id='root']/div[2]/div[4]/div[3]/table/tbody/tr/td[2]")
+# xpath of time; //*[@id="root"]/div[2]/div[4]/div[3]/table/tbody/tr[1]/td[2]
+# xpath of corresponding button //*[@id="root"]/div[2]/div[4]/div[3]/table/tbody/tr[1]/td[5]/button
+    availableClasses = bot.find_elements(By.XPATH, "//*[@id='root']/div[2]/div[4]/div[3]/table/tbody/tr")
+  # change this out to have a counter. That way I can retrieve the tr and just click the tr[num]/td[5]/button
     for e in availableClasses:
       time.sleep(4)
-      print("class time....",e.text)
+      # apparently this isnt just a -, it is some sort of smaller object
+      for td in e:
+        print(td.text)
+        eStart = e.text.split("–")
+        print(eStart)
+
+      
       
     return
   
