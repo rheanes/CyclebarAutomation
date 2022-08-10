@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-import time,os
+import time, os
 
 def get_driver():
     options = webdriver.ChromeOptions()
@@ -51,25 +51,23 @@ class cycleBot:
 
 
   def ReserveUrl(self, Url, ClassTime):
-    print("Target Class time:", ClassTime)
-    print("Target Class time type:", type(ClassTime))
-    time.sleep(3)
+    time.sleep(5)
     print('url from inside attemptReserve', Url)
+    print("Target Class time:", ClassTime)
     bot = self.bot
     bot.get(Url)
-# xpath of time; //*[@id="root"]/div[2]/div[4]/div[3]/table/tbody/tr[1]/td[2]
-# xpath of corresponding button //*[@id="root"]/div[2]/div[4]/div[3]/table/tbody/tr[1]/td[5]/button
-    availableClasses = bot.find_elements(By.XPATH, "//*[@id='root']/div[2]/div[4]/div[3]/table/tbody/tr")
-  # change this out to have a counter. That way I can retrieve the tr and just click the tr[num]/td[5]/button
-    for e in availableClasses:
-      time.sleep(4)
-      # apparently this isnt just a -, it is some sort of smaller object
-      for td in e:
-        print(td.text)
-        eStart = e.text.split("–")
-        print(eStart)
+    #find all the table rows
+    rows = bot.find_elements(By.XPATH, "//*[@id='root']/div[2]/div[4]/div[3]/table/tbody/tr")
+    #for each row in rows, pull out the time and the button
+    for r in rows:
+      tds = r.find_elements(By.TAG_NAME, "td")
+      if(len(tds)> 2):
+        startTime = tds[1]
+      else:
+        continue
 
-      
+      print(startTime.text)
+
       
     return
   
