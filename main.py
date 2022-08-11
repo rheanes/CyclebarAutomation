@@ -73,11 +73,14 @@ elif (action == 'useBot'):
       url = f"https://members.cyclebar.com/book/cyclebar-dunwoody?date={classDateString}"
       classFound = bot.ReserveUrl(url, ClassTime)
       if(classFound):
-        bot.selectBike(BikeNum)
+        bikeAvailable = bot.selectBike(BikeNum)
+        if (bikeAvailable):
+          bot.confirmBooking()
+        else:
+          print('Bike was not available to be booked.')
+      else:
+        print('No such class exists...')
       
-
-    
-
     exit(0)
 else:
     print('please enter a valid argument')
