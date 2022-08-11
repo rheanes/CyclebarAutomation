@@ -12,6 +12,7 @@ def get_driver():
     options.add_argument("no-sandbox")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_argument("disable-blink-features=AutomationControlled")
+    options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options=options)
     return driver
 
@@ -61,24 +62,34 @@ class cycleBot:
     #for each row in rows, pull out the time and the button
     for r in rows:
       tds = r.find_elements(By.TAG_NAME, "td")
-      if(len(tds)> 2):
-        startTime = tds[1]
-        button = r.find_element(By.TAG_NAME, "button")
-      else:
+      if(len(tds)< 2):
         continue
-
-      print("ClassTime:",startTime.text,"ButtonTxt:", button.text)
-
       
-    return
+      startTime = tds[1].text.split('–')[0]
+      if(startTime == ClassTime ):
+        print('target found!!')
+        button = r.find_element(By.TAG_NAME, "button")
+        scrollToElement(bot, button)
+        button.click()
+        print(bot.current_url,'\n', Url)
+        if(bot.current_url == Url):
+          print('accepting covid policy')
+          acceptCovidPolicy(bot)
+        return True
+
+    print('target not found')
+    return False
   
-  
+def scrollToElement(bot, Element):
+    bot.execute_script("arguments[0].scrollIntoView()",Element )
+    time.sleep(1)
+    
 
 
 def acceptCovidPolicy(bot):
     time.sleep(3)
-    elements = bot.find_elements(By.TAG_NAME, 'button')
-    for e in elements:
-        e.click()
+    element = bot.find_element(By.TAG_NAME, 'button')
+    scrollToElement(bot, element)
+    element.click()
   
   

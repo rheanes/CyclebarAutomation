@@ -1,9 +1,10 @@
+import os
 import cycleBot as cb
 import secrets, sys
 import time
 from datetime import date
 import datetime
-from handleInput import retrieveClasses, addToSchedule, FindEarliestRegDate, validateBike, validateTime, validateDate
+from handleInput import retrieveClasses, addToSchedule, FindEarliestRegDate, validateBike, validateDate
 
 if (len(sys.argv) > 1):
     action = sys.argv[1]
@@ -20,9 +21,8 @@ if (action == 'add'):
     ClassDate = str(todays_date.year) + '-' + ClassDate
     EarliestDate = FindEarliestRegDate(ClassDate)
     #get user input for user time and validdate
-    print('Enter class time in form of: H:MM')
+    print('Enter class time in form of: H:MMam/pm, including am or pm')
     ClassTime = input()
-    validateTime(ClassTime)
     print('Enter bike number:')
     BikeNumber = int(input())
     validateBike(BikeNumber)
@@ -52,9 +52,12 @@ elif (action == 'test'):
 
 elif (action == 'useBot'):
     credentials = secrets.get_credentials()
+    my_user = os.environ['uname']
+    my_pword = os.environ['pword']
     upcomingClasses = retrieveClasses()
     print('creating bot...')
     bot = cb.cycleBot(credentials['email'], credentials['password'])
+    #bot = cb.cycleBot(my_user, my_pword)
     '''Handle the bot functions
       login in for classes
       then try to register for classes'''
@@ -65,11 +68,14 @@ elif (action == 'useBot'):
       ClassDate = upcomingClasses['ClassDate'][index]
       classDateString = ClassDate.strftime('%Y-%m-%d')
       ClassTime = upcomingClasses['ClassTime'][index]
-      url = f"https://members.cyclebar.com/book/cyclebar-dunwoody?date={classDateString}"
-      bot.ReserveUrl(url, ClassTime)
-      
       BikeNum = upcomingClasses['BikeNumber'][index]
       RegistrationDate = upcomingClasses['RegDate'][index]
+      url = f"https://members.cyclebar.com/book/cyclebar-dunwoody?date={classDateString}"
+      classFound = bot.ReserveUrl(url, ClassTime)
+      if(classFound):
+        bot.selectBike()
+      
+
     
 
     exit(0)
