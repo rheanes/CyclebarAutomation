@@ -53,8 +53,6 @@ class cycleBot:
 
   def ReserveUrl(self, Url, ClassTime):
     time.sleep(5)
-    print('url from inside attemptReserve', Url)
-    print("Target Class time:", ClassTime)
     bot = self.bot
     bot.get(Url)
     #find all the table rows
@@ -64,7 +62,6 @@ class cycleBot:
       tds = r.find_elements(By.TAG_NAME, "td")
       if(len(tds)< 2):
         continue
-      
       startTime = tds[1].text.split('–')[0]
       if(startTime == ClassTime ):
         print('target found!!')
@@ -73,12 +70,30 @@ class cycleBot:
         button.click()
         print(bot.current_url,'\n', Url)
         if(bot.current_url == Url):
-          print('accepting covid policy')
+          print('accepting covid policy...')
           acceptCovidPolicy(bot)
         return True
-
     print('target not found')
     return False
+    
+  def selectBike(self, bikeNumber):
+    print('Bike number:', bikeNumber)
+    bot = self.bot
+    availableSeats = bot.find_elements(By.CLASS_NAME, "spot-seat-selectable")
+    seatIsFree = False
+    for seat in availableSeats:
+      print(seat.text)
+      if(seat.text == bikeNumber):
+        seat.click
+        seatIsFree = True
+        break
+
+    if(seatIsFree):
+      button = bot.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/div/div/div[2]/div[3]/button')
+      button.click()
+      print('button text:',button.text)
+    
+    
   
 def scrollToElement(bot, Element):
     bot.execute_script("arguments[0].scrollIntoView()",Element )

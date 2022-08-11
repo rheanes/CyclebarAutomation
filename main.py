@@ -56,8 +56,8 @@ elif (action == 'useBot'):
     my_pword = os.environ['pword']
     upcomingClasses = retrieveClasses()
     print('creating bot...')
-    bot = cb.cycleBot(credentials['email'], credentials['password'])
-    #bot = cb.cycleBot(my_user, my_pword)
+    #bot = cb.cycleBot(credentials['email'], credentials['password'])
+    bot = cb.cycleBot(my_user, my_pword)
     '''Handle the bot functions
       login in for classes
       then try to register for classes'''
@@ -73,7 +73,7 @@ elif (action == 'useBot'):
       url = f"https://members.cyclebar.com/book/cyclebar-dunwoody?date={classDateString}"
       classFound = bot.ReserveUrl(url, ClassTime)
       if(classFound):
-        bot.selectBike()
+        bot.selectBike(BikeNum)
       
 
     
