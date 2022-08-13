@@ -92,3 +92,10 @@ def CanRegisterCurrently(data):
     filtered_data = data[data["RegDate"] <= today]
     return filtered_data
 
+
+def displayData(EarliestDate, ClassDate, ClassTime, BikeNumber):
+  print('Entered data: \n',
+          'Date to initialize registration:',EarliestDate,
+          '\n Date of class:',ClassDate,
+          '\n Class Time:',ClassTime,
+          '\n Bike number:',BikeNumber)

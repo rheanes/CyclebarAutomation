@@ -4,7 +4,7 @@ import secrets, sys
 import time
 from datetime import date
 import datetime
-from handleInput import retrieveClasses, addToSchedule, FindEarliestRegDate, validateBike, validateDate
+from handleInput import retrieveClasses, addToSchedule, FindEarliestRegDate, validateBike, validateDate, displayData
 
 if (len(sys.argv) > 1):
     action = sys.argv[1]
@@ -33,12 +33,7 @@ if (action == 'add'):
         "BikeNumber": BikeNumber
     }
     addToSchedule(payload)
-
-    print('Entered data: \n',
-          'Date to initialize registration:',EarliestDate,
-          '\n Date of class:',ClassDate,
-          '\n Class Time:',ClassTime,
-          '\n Bike number:',BikeNumber)
+    displayData(EarliestDate, ClassDate, ClassTime, BikeNumber)
 
 elif (action == 'test'):
     upcomingClasses = retrieveClasses()
