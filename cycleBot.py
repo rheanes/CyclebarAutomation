@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import time, os
+import random
 
 
 def get_driver():
@@ -31,13 +32,13 @@ class cycleBot:
         bot.get(
             "https://members.cyclebar.com/auth/login?location_id=cyclebar-dunwoody"
         )
-        time.sleep(2)
+        time.sleep(getRandom(1,3))
         email = bot.find_element(by="id", value="form-input-email")
         email.send_keys(self.email)
-        time.sleep(3)
+        time.sleep(getRandom(2,4))
         password = bot.find_element(by="id", value="form-input-password")
         password.send_keys(self.password)
-        time.sleep(1)
+        time.sleep(getRandom(2,4))
         password.send_keys(Keys.RETURN)
         if (self.getCurrentUrl() ==
                 'https://members.cyclebar.com/covid-waiver/cyclebar-dunwoody'):
@@ -52,7 +53,7 @@ class cycleBot:
         return self.bot.current_url
 
     def ReserveUrl(self, Url, ClassTime):
-        time.sleep(5)
+        time.sleep(getRandom(1,3))
         bot = self.bot
         bot.get(Url)
         #find all the table rows
@@ -65,7 +66,7 @@ class cycleBot:
                 continue
             startTime = tds[1].text.split('–')[0]
             if (startTime == ClassTime):
-                print('target found!!')
+                print('bike found!!')
                 button = r.find_element(By.TAG_NAME, "button")
                 scrollToElement(bot, button)
                 button.click()
@@ -95,7 +96,7 @@ class cycleBot:
             button = bot.find_element(
                 By.XPATH,
                 '//*[@id="root"]/div[2]/div/div/div/div[2]/div[3]/button')
-            time.sleep(1)
+            time.sleep(getRandom(1,3))
             print('button text:', button.text)
             button.click()
             return True
@@ -110,11 +111,17 @@ class cycleBot:
 
 def scrollToElement(bot, Element):
     bot.execute_script("arguments[0].scrollIntoView()", Element)
-    time.sleep(1)
+    time.sleep(getRandom(1,3))
 
 
 def acceptCovidPolicy(bot):
-    time.sleep(3)
+    time.sleep(getRandom(1,3))
     element = bot.find_element(By.TAG_NAME, 'button')
     scrollToElement(bot, element)
     element.click()
+
+
+def getRandom(low, high):
+  rand = random.randint(low, high)
+  print('Counting to: ', rand)
+  return rand
