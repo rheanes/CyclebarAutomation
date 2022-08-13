@@ -56,8 +56,8 @@ elif (action == 'useBot'):
     my_pword = os.environ['pword']
     upcomingClasses = retrieveClasses()
     print('creating bot...')
-    #bot = cb.cycleBot(credentials['email'], credentials['password'])
-    bot = cb.cycleBot(my_user, my_pword)
+    bot = cb.cycleBot(credentials['email'], credentials['password'])
+    #bot = cb.cycleBot(my_user, my_pword)
     '''Handle the bot functions
       login in for classes
       then try to register for classes'''
@@ -81,6 +81,6 @@ elif (action == 'useBot'):
       else:
         print('No such class exists...')
       
-    exit(0)
+    bot.bot.quit()
 else:
     print('please enter a valid argument')
